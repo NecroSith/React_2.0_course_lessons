@@ -25,15 +25,15 @@ const calcCash = (own = 0, cash) => {
 const money = calcCash(null, sponsors.cash);
 
 // Null handler function in case that director takes null value which can pass through default parameter algorithm
-const directorNullHandler = arg => (...a) => arg(...a.map(v => (v === null ? 'Victor' : v)))
+const nullHandler = arg => (...a) => arg(...a.map(v => (v === null ? undefined : v)));
 
-const makeBusiness = (owner, director, cash, emp) => {
-    directorNullHandler(director = 'Victor');
+const makeBusiness = nullHandler((owner, director = 'Victor', cash, emp) => {
     const {eu, rus} = sponsors;
     const sumSponsors = [...eu, ...rus, 'unexpected sponsor'];
     console.log(`We have a business. Owner: ${owner}, director: ${director}. Our budget: ${cash}.And our employers: ${emp}.
 And we have a sponsors: 
 ${[...sumSponsors]}
 Note. Be careful with ${eu[0]}. It's a huge risk.`);
-}
+});
+
 makeBusiness('Sam', null, money, employers);
