@@ -1,5 +1,6 @@
 import React from 'react';
 
+import PostListTime from '../post-list-time';
 import './post-list-item.css';
 
 const PostListitem = () => {
@@ -9,6 +10,7 @@ const PostListitem = () => {
                 Hello!
             </span>
             <div className='d-flex justify-content-center align-items-center'>
+                <PostListTime />
                 <button type='button' className='btn-star btn-sm'>
                     <i className='fa fa-star'></i>
                 </button>
