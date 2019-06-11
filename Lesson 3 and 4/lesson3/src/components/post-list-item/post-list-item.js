@@ -59,7 +59,7 @@ export default class PostListItem extends Component {
                     <div className='d-flex justify-content-center align-items-center'>
                         <PostListTime />
                         <button type='button' className='btn-edit btn-sm' onClick={this.onEdit}>
-                            <i className="fas fa-pencil"></i>
+                            <i className="fa fa-pencil"></i>
                         </button>
                         <button type='button' className='btn-star btn-sm' onClick={this.onImportant}>
                             <i className='fa fa-star'></i>

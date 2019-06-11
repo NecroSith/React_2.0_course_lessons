@@ -24,7 +24,7 @@ export default class PostEditForm extends React.Component{
                     type='submit'
                     className='btn btn-success'
                 >
-                    <i className='fa fa-times'></i>
+                    <i className="fa fa-check"></i>
                 </button>
                 <button 
                     type='submit'
