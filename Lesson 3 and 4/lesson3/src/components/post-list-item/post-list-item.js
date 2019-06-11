@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import PostListTime from '../post-list-time';
 import './post-list-item.css';
+import PostEditForm from '../post-edit-form';
 
 export default class PostListItem extends Component {
     constructor(props) {
@@ -9,11 +10,13 @@ export default class PostListItem extends Component {
 
         this.state = {
             important: false,
-            like: false
+            like: false,
+            edit: false
         }
 
         this.onImportant = this.onImportant.bind(this);
         this.onLike = this.onLike.bind(this);
+        this.onEdit = this.onEdit.bind(this);
 
     }
 
@@ -26,6 +29,12 @@ export default class PostListItem extends Component {
     onLike() {
         this.setState(({like}) => ({
             like: !like
+        }))
+    }
+
+    onEdit() {
+        this.setState(({edit}) => ({
+            edit: !edit
         }))
     }
 
@@ -42,23 +51,31 @@ export default class PostListItem extends Component {
         }
 
         return (
-            <div className={classNames}>
-                <span className='app-list-item-label'>
-                    {label}
-                </span>
-                <div className='d-flex justify-content-center align-items-center'>
-                    <PostListTime />
-                    <button type='button' className='btn-star btn-sm' onClick={this.onImportant}>
-                        <i className='fa fa-star'></i>
-                    </button>
-                    <button type='button' className='btn-trash btn-sm'>
-                        <i className='fa fa-trash-o'></i>
-                    </button>
-                    <button onClick={this.onLike}>
-                        <i className='fa fa-heart' ></i>
-                    </button>
+            <>
+                <div className={classNames}>
+                    <span className='app-list-item-label'>
+                        {label}
+                    </span>
+                    <div className='d-flex justify-content-center align-items-center'>
+                        <PostListTime />
+                        <button type='button' className='btn-edit btn-sm' onClick={this.onEdit}>
+                            <i className="fas fa-pencil"></i>
+                        </button>
+                        <button type='button' className='btn-star btn-sm' onClick={this.onImportant}>
+                            <i className='fa fa-star'></i>
+                        </button>
+                        <button type='button' className='btn-trash btn-sm'>
+                            <i className='fa fa-trash-o'></i>
+                        </button>
+                        <button onClick={this.onLike}>
+                            <i className='fa fa-heart' ></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
+                <div>
+                    <PostEditForm label={label} classNames={classNames} edit={this.edit}/>
+                </div>
+            </>
         )
     }
 }
