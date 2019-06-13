@@ -1,9 +1,20 @@
 import React from 'react';
+import { Button, Form, Input} from 'reactstrap';
 
 export default class PostEditForm extends React.Component{
     constructor(props) {
         super(props);
 
+        this.state = {
+            label: props.label
+        }
+
+    }
+
+    EditPost() {
+        this.setState({
+            label: this.props.label
+        })
     }
 
     render() {
@@ -13,26 +24,26 @@ export default class PostEditForm extends React.Component{
            classNames += ' editing';
         }
         return (
-            <form className={classNames}>
-                <input 
+            <Form className={classNames}>
+                <Input 
                     type='text'
                     placeholder='Введите новый текст'
                     className='form-control new-post-label'
                     value={this.props.label}
                 />
-                <button 
+                <Button 
                     type='submit'
-                    className='btn btn-success'
+                    color="success"
                 >
-                    <i className="fa fa-check"></i>
-                </button>
-                <button 
+                    <i className="fa fa-check" onClick={this.EditPost}></i>
+                </Button>
+                <Button 
                     type='submit'
-                    className='btn btn-danger'
+                    color="danger"
                 >
                     <i className='fa fa-times'></i>
-                </button>
-            </form>
+                </Button>
+            </Form>
         )
     }
 }

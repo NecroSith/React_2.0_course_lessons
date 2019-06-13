@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import PostListTime from '../post-list-time';
 import './post-list-item.css';
 import PostEditForm from '../post-edit-form';
+import styled from 'styled-components';
 
 export default class PostListItem extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            label: this.props.label,
             important: false,
             like: false,
             edit: false
@@ -39,7 +41,7 @@ export default class PostListItem extends Component {
     }
 
     render() {
-        const {label} = this.props;
+        const {label, onDelete} = this.props;
         const {important, like} = this.state;
         let classNames = 'app-list-item d-flex justify-content-between';
         if (this.state.important) {
@@ -64,7 +66,7 @@ export default class PostListItem extends Component {
                         <button type='button' className='btn-star btn-sm' onClick={this.onImportant}>
                             <i className='fa fa-star'></i>
                         </button>
-                        <button type='button' className='btn-trash btn-sm'>
+                        <button type='button' className='btn-trash btn-sm' onClick={onDelete}>
                             <i className='fa fa-trash-o'></i>
                         </button>
                         <button onClick={this.onLike}>
@@ -73,7 +75,7 @@ export default class PostListItem extends Component {
                     </div>
                 </div>
                 <div>
-                    <PostEditForm label={label} classNames={classNames} edit={this.edit}/>
+                    <PostEditForm label={this.props.label} classNames={classNames} edit={this.edit}/>
                 </div>
             </>
         )
