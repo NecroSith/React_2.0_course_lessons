@@ -14,11 +14,28 @@ const appHeader = styled.div`
     }
 `;
 
-const AppHeader = () => {
+function postCount(count) {
+    count = count + "";
+    let base = 'запис';
+    console.log(count);
+    if (count.slice(-1) == '1') {
+        base += 'ь';
+    }
+    else if (count.slice(-1) == '2' || count.slice(-1) == '3' || count.slice(-1) == '4') {
+        base += 'и'
+    }
+    else {
+        base += 'ей';
+    }
+    return `${count} ${base}`;
+}
+
+const AppHeader = ({liked, allPosts}) => {
+
     return (
         <appHeader>
             <h1>Yan Pustynnyy</h1>
-            <h2>7 записей, из них понравилось 0</h2>
+            <h2> {postCount(allPosts)}, из них понравилось {liked}</h2>
         </appHeader>
     )
 }

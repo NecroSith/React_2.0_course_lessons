@@ -12,7 +12,7 @@ const listGroup = styled.ul`
     }
 `;
 
-const PostList = ({posts, onDelete}) => {
+const PostList = ({posts, onDelete, onToggleImportant, onToggleLiked}) => {
 
     const elements = posts.map((item) => {
         if (typeof(item) == 'object') {
@@ -22,6 +22,8 @@ const PostList = ({posts, onDelete}) => {
                     <  PostListItem 
                         {...itemProps}
                         onDelete={() => onDelete(id)}
+                        onToggleImportant={() => onToggleImportant(id)}
+                        onToggleLiked = {() => onToggleLiked(id)}
                     />
                 </ListGroupItem>
             )
