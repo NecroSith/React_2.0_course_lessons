@@ -12,7 +12,7 @@ const listGroup = styled.ul`
     }
 `;
 
-const PostList = ({posts, deleteItem, onToggleImportant, onToggleLiked}) => {
+const PostList = ({posts, deleteItem, updatePost, onToggleImportant, onToggleLiked, text}) => {
 
     const elements = posts.map((item) => {
         if (typeof(item) == 'object') {
@@ -22,7 +22,7 @@ const PostList = ({posts, deleteItem, onToggleImportant, onToggleLiked}) => {
                     <  PostListItem 
                         {...itemProps}
                         onDelete={() => deleteItem(id)}
-                        // toggleModal={() => toggleModal(label)}
+                        updatePost={() => updatePost(id, text)}
                         onToggleImportant={() => onToggleImportant(id)}
                         onToggleLiked = {() => onToggleLiked(id)}
                     />

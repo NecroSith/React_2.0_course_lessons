@@ -3,20 +3,39 @@ import React, { Component } from 'react';
 import PostListTime from '../post-list-time';
 import './post-list-item.css';
 import PostEditForm from '../post-edit-form';
-import styled from 'styled-components';
 import PostDeleteModal from '../post-delete-modal';
 
 
 export default class PostListItem extends Component {
+    constructor(props) {
+        super(props);
 
-    // onEdit() {
-    //     this.setState(({edit}) => ({
-    //         edit: !edit
-    //     }))
-    // }
+        this.state = {
+            edit: false
+        }
+
+        this.onEdit = this.onEdit.bind(this);
+    }
+
+    onEdit(e) {
+        e.preventDefault();
+        this.setState(({edit}) => ({
+            edit: !edit
+        }))
+    }
 
     render() {
-        const {label, onDelete, onToggleImportant, onToggleLiked, important, like} = this.props;
+        const {
+            id,
+            text,
+            label, 
+            onDelete,
+            updatePost, 
+            onToggleImportant, 
+            onToggleLiked, 
+            important, 
+            like
+        } = this.props;
         let classNames = 'app-list-item d-flex justify-content-between';
         if (important) {
             classNames += ' important';
@@ -59,7 +78,12 @@ export default class PostListItem extends Component {
                     </div>
                 </div>
                 <div>
-                    <PostEditForm label={this.props.label} classNames={classNames} edit={this.edit}/>
+                    <PostEditForm 
+                        label={this.props.label} 
+                        edit={this.state.edit}
+                        onEdit={this.onEdit}
+                        updatePost={() => updatePost(id, text)}
+                        />
                 </div>
             </>
         )

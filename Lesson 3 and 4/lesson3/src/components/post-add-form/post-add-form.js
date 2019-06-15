@@ -39,7 +39,6 @@ export default class PostAddForm extends React.Component {
                 />
                 <button 
                     type='submit'
-                    // onClick={() => this.props.onAdd('text')}
                     className='btn btn-outline-secondary'
                 >Добавить пост</button>
             </form>

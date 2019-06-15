@@ -38,6 +38,8 @@ export default class App extends React.Component {
 
         this.updateSearch = this.updateSearch.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
+
+        this.updatePost = this.updatePost.bind(this);
     }
 
     searchPost(term, items) {
@@ -57,6 +59,24 @@ export default class App extends React.Component {
         else {
             return items;
         }
+    }
+
+    updatePost(id, text) {
+        console.log(id);
+        console.log(text);
+        this.setState(({data}) => {
+            const index = data.findIndex(elem => elem.id === id);
+ 
+            const old = data[index];
+            let newItem = {};
+            newItem = {...old, label: text};
+ 
+            const newArr = [...data.slice(0, index), newItem, ...data.slice(index+1)];
+ 
+            return {
+                data: newArr
+            }
+        })
     }
 
     generateId() {
@@ -152,7 +172,6 @@ export default class App extends React.Component {
         const visiblePosts = this.filterPost(filter, this.searchPost(term, data));
         return (
             <app>
-                {/* <PostDeleteModal modal={modal}/> */}
                 <AppHeader liked={liked}
                 allPosts={allPosts}/>
                 <div className='search-panel d-flex'>
@@ -165,10 +184,11 @@ export default class App extends React.Component {
                     />
                 </div>
                 <PostList posts={visiblePosts}
-                toggleModal={this.toggleModal}
-                deleteItem={this.deleteItem}
-                onToggleImportant={this.onToggleImportant}
-                onToggleLiked={this.onToggleLiked}
+                        toggleModal={this.toggleModal}
+                        deleteItem={this.deleteItem}
+                        onToggleImportant={this.onToggleImportant}
+                        onToggleLiked={this.onToggleLiked}
+                        updatePost={this.updatePost}
                 />
                 <PostAddForm onAdd={this.addItem}/>
             </app>

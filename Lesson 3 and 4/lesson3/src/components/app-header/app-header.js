@@ -17,11 +17,10 @@ const appHeader = styled.div`
 function postCount(count) {
     count = count + "";
     let base = 'запис';
-    console.log(count);
-    if (count.slice(-1) == '1') {
+    if (count.slice(-1) === '1') {
         base += 'ь';
     }
-    else if (count.slice(-1) == '2' || count.slice(-1) == '3' || count.slice(-1) == '4') {
+    else if (count.slice(-1) === '2' || count.slice(-1) === '3' || count.slice(-1) === '4') {
         base += 'и'
     }
     else {

@@ -14,15 +14,13 @@ export default class PostDeleteModal extends React.Component {
     }
 
     toggleModal() {
-        console.log(this.state.modal);
         this.setState(prevState => ({
             modal: !prevState.modal
-          }));
+        }));
     }
 
     render() {
       const {label, onDelete} = this.props;
-      console.log(label);
       return (
           <div>
               <button type='button' className='btn-trash btn-sm' onClick={this.toggleModal}>
