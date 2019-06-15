@@ -12,17 +12,20 @@ const listGroup = styled.ul`
     }
 `;
 
-const PostList = ({posts, deleteItem, updatePost, onToggleImportant, onToggleLiked, text}) => {
+const PostList = ({posts, deleteItem, updatePost, onToggleImportant, onToggleLiked}) => {
 
     const elements = posts.map((item) => {
         if (typeof(item) == 'object') {
             const {id, ...itemProps} = item;
+
+        // console.log(`Post list text - ${text}`);
+
             return (
                 <ListGroupItem key={id}>
                     <  PostListItem 
                         {...itemProps}
                         onDelete={() => deleteItem(id)}
-                        updatePost={() => updatePost(id, text)}
+                        updatePost={(text) => updatePost(id, text)}
                         onToggleImportant={() => onToggleImportant(id)}
                         onToggleLiked = {() => onToggleLiked(id)}
                     />

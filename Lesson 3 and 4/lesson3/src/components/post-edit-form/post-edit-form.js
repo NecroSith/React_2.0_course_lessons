@@ -16,15 +16,21 @@ export default class PostEditForm extends React.Component{
     updateLabel(e) {
         const { target: {value}} = e
         this.setState({
+            edit: this.props.edit,
             text: value
         })
     }
 
     updatePost = (e) => {
         e.preventDefault();
-
-        this.props.updatePost(this.props.id, this.state.text);
+        this.props.updatePost(this.state.text);
         console.log(`Передаем - ${this.state.text}`);
+        this.setState({
+            text: ''
+        })
+            this.setState({
+                edit: false
+            })
     }
 
     render() {

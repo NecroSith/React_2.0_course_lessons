@@ -27,7 +27,7 @@ export default class PostListItem extends Component {
     render() {
         const {
             id,
-            text,
+            // text,
             label, 
             onDelete,
             updatePost, 
@@ -44,6 +44,8 @@ export default class PostListItem extends Component {
         if (like) {
             classNames += ' like';
         }
+
+        // console.log(`Post list item text - ${text}`);
 
         return (
             <>
@@ -82,7 +84,7 @@ export default class PostListItem extends Component {
                         label={this.props.label} 
                         edit={this.state.edit}
                         onEdit={this.onEdit}
-                        updatePost={() => updatePost(id, text)}
+                        updatePost={updatePost}
                         />
                 </div>
             </>

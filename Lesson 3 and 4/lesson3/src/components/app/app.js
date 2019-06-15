@@ -39,7 +39,7 @@ export default class App extends React.Component {
         this.updateSearch = this.updateSearch.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
 
-        this.updatePost = this.updatePost.bind(this);
+        this.updateItem = this.updateItem.bind(this);
     }
 
     searchPost(term, items) {
@@ -61,7 +61,7 @@ export default class App extends React.Component {
         }
     }
 
-    updatePost(id, text) {
+    updateItem(id, text) {
         console.log(id);
         console.log(text);
         this.setState(({data}) => {
@@ -188,7 +188,7 @@ export default class App extends React.Component {
                         deleteItem={this.deleteItem}
                         onToggleImportant={this.onToggleImportant}
                         onToggleLiked={this.onToggleLiked}
-                        updatePost={this.updatePost}
+                        updatePost={this.updateItem}
                 />
                 <PostAddForm onAdd={this.addItem}/>
             </app>
