@@ -7,7 +7,7 @@ import PostList from '../post-list';
 import PostAddForm from '../post-add-form';
 // import PostDeleteModal from '../post-delete-modal';
 import styled from 'styled-components';
-import { Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 
 
 const app = styled.div`
@@ -57,12 +57,6 @@ export default class App extends React.Component {
         else {
             return items;
         }
-    }
-
-    toggleModal() {
-        this.setState(prevState => ({
-            modal: !prevState.modal
-          }));
     }
 
     generateId() {
@@ -158,7 +152,7 @@ export default class App extends React.Component {
         const visiblePosts = this.filterPost(filter, this.searchPost(term, data));
         return (
             <app>
-                <PostDeleteModal toggleModal={this.toggleModal} />
+                {/* <PostDeleteModal modal={modal}/> */}
                 <AppHeader liked={liked}
                 allPosts={allPosts}/>
                 <div className='search-panel d-flex'>
@@ -171,7 +165,8 @@ export default class App extends React.Component {
                     />
                 </div>
                 <PostList posts={visiblePosts}
-                onDelete={this.deleteItem}
+                toggleModal={this.toggleModal}
+                deleteItem={this.deleteItem}
                 onToggleImportant={this.onToggleImportant}
                 onToggleLiked={this.onToggleLiked}
                 />
@@ -180,30 +175,4 @@ export default class App extends React.Component {
             
         )
     }  
-}
-
-
-class PostDeleteModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false
-    };
-
-  }
-
-  render() {
-      const {toggleModal, onDelete, id} = this.props;
-    return (
-      <div>
-        <Modal>
-          <ModalHeader toggle={() => toggleModal()}>Вы точно хотите удалить данный пост? Это действие нельзя отменить</ModalHeader>
-          <ModalFooter>
-            {/* <Button color="danger" onClick={() => onDelete(id)}>Удалить</Button>{' '} */}
-            <Button color="secondary" onClick={this.toggle}>Отмена</Button>
-          </ModalFooter>
-        </Modal>
-      </div>
-    );
-  }
 }
