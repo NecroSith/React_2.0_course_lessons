@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import GotService from '../../services/gotService';
 import styled from 'styled-components';
+import Spinner from '../spinner';
+import ErrorMessage from '../errorMessage';
 
-const randomBlock = styled.div`
+const RandomBlock = styled.div`
     background-color: #fff;
     padding: 25px 25px 15px 25px;
     margin-bottom: 40px;
@@ -12,7 +14,7 @@ const randomBlock = styled.div`
     }
 `;
 
-const term = styled.div`
+const Term = styled.span`
     font-weight: bold;
 `;
 
@@ -20,35 +22,33 @@ const term = styled.div`
 export default class RandomChar extends Component {
     constructor(props) {
         super(props);
+        this.got = new GotService();
+        this.updateChar();
         this.state = {
-            name: 'John Snow',
-            gender: 'male',
-            born: 1783,
-            died: 1820,
-            culture: 'first'
+            char: {},
+            loading: true
         }
-
-        this.getData = this.getData.bind(this);
     }
 
-    componentDidMount() {
-        this.getData();
+    onCharLoaded = char => {
+        this.setState({ 
+            char,
+            loading: false,
+            error: false
+         })
     }
 
-    getData() {
-        const got = new GotService();
-        // let output = got.getOneRecord('/characters');
-        let output = got.getAllRecords('/characters');
-        output.then(res => {
-            console.log(res);
-            // this.setState({
-            //     name: res.name,
-            //     gender: res.gender,
-            //     born: res.born,
-            //     died: res.died,
-            //     culture: res.culture
-            // })
+    onError = err => {
+        this.setState({
+            error: true,
+            loading: false
         })
+    }
+
+    updateChar() {
+        this.got.getOneRecord('/characters')
+            .then(this.onCharLoaded)
+            .catch(this.onError)
     }
 
     getTitle() {
@@ -66,29 +66,46 @@ export default class RandomChar extends Component {
 
     render() {
 
+        const {char, loading, error} = this.state;
+
+        const errorMsg = error ? <ErrorMessage /> : null;
+        const spinner = loading ? <Spinner /> : null;
+        const data = !(loading || error) ? <View char={char}/> : null;
+
         return (
-            <randomBlock className="rounded">
-                <h4>
-                    {this.getTitle()}</h4>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item d-flex justify-content-between">
-                        <term>Gender </term>
-                        <span>{this.state.gender}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                        <term>Born </term>
-                        <span>{this.state.born}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                        <term>Died </term>
-                        <span>{this.state.died}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                        <term>Culture </term>
-                        <span>{this.state.culture}</span>
-                    </li>
-                </ul>
-            </randomBlock>
+            <RandomBlock className="rounded">
+                {errorMsg}
+                {spinner}
+                {data}
+            </RandomBlock>
         );
     }
+}
+
+const View = ({char}) => {
+    const {name, gender, born, died, culture} = char;
+    return (
+        <>
+            <h4>
+                Random character: {name || 'no data'}</h4>
+            <ul className="list-group list-group-flush">
+                <li className="list-group-item d-flex justify-content-between">
+                    <Term>Gender </Term>
+                    <span>{gender || 'no data'}</span>
+                </li>
+                <li className="list-group-item d-flex justify-content-between">
+                    <Term>Born </Term>
+                    <span>{born || 'no data'}</span>
+                </li>
+                <li className="list-group-item d-flex justify-content-between">
+                    <Term>Died </Term>
+                    <span>{died || 'no data'}</span>
+                </li>
+                <li className="list-group-item d-flex justify-content-between">
+                    <Term>Culture </Term>
+                    <span>{culture || 'no data'}</span>
+                </li>
+            </ul>
+        </>
+    )
 }

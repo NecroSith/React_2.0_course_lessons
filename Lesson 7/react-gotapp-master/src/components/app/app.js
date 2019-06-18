@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Row, Container} from 'reactstrap';
+import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ItemList from '../itemList';
@@ -12,6 +12,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            randomChar: true,
             characters: true,
             books: false,
             houses: false
@@ -19,6 +20,7 @@ export default class App extends React.Component {
 
         this.updateState = this.updateState.bind(this);
         this.getData = this.getData.bind(this);
+        this.toggleRandom = this.toggleRandom.bind(this);
 
         console.log(this.state);
     }
@@ -29,15 +31,6 @@ export default class App extends React.Component {
         if (value == 'characters') {
             output = got.getOneRecord('/characters');
             output.then(res => console.log(res));
-            // console.log(res.name);
-            // this.setState({
-            //     name: res.name,
-            //     gender: res.gender,
-            //     born: res.born,
-            //     died: res.died,
-            //     culture: res.culture
-            // });
-        // });
         }
         else if (value == 'books') {
             output = got.getOneRecord('/characters');
@@ -75,18 +68,34 @@ export default class App extends React.Component {
             })
             this.getData('books');
         }
-        console.log(this.state);
-        
-        
+        console.log(this.state); 
     }
+
+    toggleRandom() {
+        this.setState({
+            randomChar: !this.state.randomChar
+        })
+        console.log(this.state.randomChar)
+    }
+
     render() {
+
+        let status = ' ';
+
+        if (this.state.randomChar) {
+            status += 'd-block';
+        }
+        else {
+            status += 'd-none';
+        }
         return (
             <> 
                 <Container>
                     <Header updateState={this.updateState}/>
+                    <Button onClick={this.toggleRandom}>Get random character!</Button>
                 </Container>
                 <Container>
-                    <Row>
+                    <Row className={status}>
                         <Col lg={{size: 6, offset: 0}}>
                             <RandomChar
                                 characters={this.state.characters}
