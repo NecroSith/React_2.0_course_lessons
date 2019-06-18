@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
-import './itemList.css';
+import styled from 'styled-components';
 import GotService from '../../services/gotService';
+
+const listGroupItem = styled.div`
+    cursor: pointer;
+`;
 
 
 export default class ItemList extends Component {

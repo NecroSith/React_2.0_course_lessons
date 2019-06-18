@@ -1,6 +1,20 @@
 import React, {Component} from 'react';
-import './randomChar.css';
 import GotService from '../../services/gotService';
+import styled from 'styled-components';
+
+const randomBlock = styled.div`
+    background-color: #fff;
+    padding: 25px 25px 15px 25px;
+    margin-bottom: 40px;
+    h4 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+`;
+
+const term = styled.div`
+    font-weight: bold;
+`;
 
 
 export default class RandomChar extends Component {
@@ -53,28 +67,28 @@ export default class RandomChar extends Component {
     render() {
 
         return (
-            <div className="random-block rounded">
+            <randomBlock className="rounded">
                 <h4>
                     {this.getTitle()}</h4>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Gender </span>
+                        <term>Gender </term>
                         <span>{this.state.gender}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Born </span>
+                        <term>Born </term>
                         <span>{this.state.born}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Died </span>
+                        <term>Died </term>
                         <span>{this.state.died}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Culture </span>
+                        <term>Culture </term>
                         <span>{this.state.culture}</span>
                     </li>
                 </ul>
-            </div>
+            </randomBlock>
         );
     }
 }
