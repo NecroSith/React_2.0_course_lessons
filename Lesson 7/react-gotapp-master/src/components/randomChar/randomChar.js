@@ -23,19 +23,37 @@ export default class RandomChar extends Component {
     constructor(props) {
         super(props);
         this.got = new GotService();
-        this.updateChar();
         this.state = {
             char: {},
-            loading: true
+            loading: true,
+            error: false,
+            status: null
         }
     }
 
+    componentDidMount() {
+        console.log('mounting');
+        this.updateChar();
+        this.timerId = setInterval(this.updateChar, 5000);
+    }
+
+    componentWillUnmount() {
+        console.log('unmounting');
+        clearInterval(this.timerId);
+    }
+
     onCharLoaded = char => {
-        this.setState({ 
-            char,
-            loading: false,
-            error: false
-         })
+        if (typeof(char) == 'object') {
+            this.setState({ 
+                char,
+                loading: false,
+                error: false
+             })
+        }
+        else {
+            console.log('oops');
+        }
+        
     }
 
     onError = err => {
@@ -45,24 +63,11 @@ export default class RandomChar extends Component {
         })
     }
 
-    updateChar() {
+    updateChar = () => {
+        // console.log('update');
         this.got.getOneRecord('/characters')
             .then(this.onCharLoaded)
-            .catch(this.onError)
-    }
-
-    getTitle() {
-        if (this.props.characters) {
-            return `Random character: ${this.state.name}`;
-        }
-        else if(this.props.houses) {
-            return `Random house: `;
-        }
-        else if(this.props.books) {
-            return `Random book: `;
-        }
-    }
-    
+    }  
 
     render() {
 

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import GotService from '../../services/gotService';
+import Spinner from '../spinner';
 
-const listGroupItem = styled.div`
+const ListGroupItem = styled.li`
     cursor: pointer;
 `;
 
@@ -10,38 +11,48 @@ const listGroupItem = styled.div`
 export default class ItemList extends Component {
     constructor(props) {
         super(props);
-
-        this.getData = this.getData.bind(this);
+        this.state = {
+            charList: null
+        }
+        this.got = new GotService();
     }
 
     componentDidMount() {
-        this.getData();
+        this.got.getResource('/characters?page=6&pageSize=5')
+            .then(charList => {
+                this.setState({
+                    charList: charList
+                })
+            })
     }
 
-    getData() {
-        const got = new GotService();
-        let output = got.getAllRecords('/characters');
-        output.then(res => {
-            // console.log(res);
-            res.forEach(item => {
-               return item.name
-            });
+    renderList(arr) {
+        return arr.map((item, i) => {
+            let id = item.url + '';
+            id = id.slice(id.length-2);
+            return <ListGroupItem
+                key={i}
+                onClick={() => this.props.onCharSelected(id)}
+                className="list-group-item">
+                {item.name || 'no data'}
+            </ListGroupItem>
         })
     }
 
 
     render() {
+
+        const {charList} = this.state;
+
+        if (!charList) {
+            return <Spinner />
+        }
+
+        const items = this.renderList(charList);
+
         return (
             <ul className="item-list list-group">
-                <li className="list-group-item">
-                   {this.getData()}
-                </li>
-                <li className="list-group-item">
-                    Brandon Stark
-                </li>
-                <li className="list-group-item">
-                    Geremy
-                </li>
+                {items}
             </ul>
         );
     }

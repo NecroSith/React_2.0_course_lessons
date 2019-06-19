@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import GotService from '../../services/gotService';
+import Spinner from '../spinner';
 
-const charDetails = styled.div`
+const CharDetailsBlock = styled.div`
     background-color: #fff;
     padding: 25px 25px 15px 25px;
     margin-bottom: 40px;
@@ -12,7 +13,7 @@ const charDetails = styled.div`
     }
 `;
 
-const selectError = styled.div`
+const SelectError = styled.div`
     color: #fff;
     text-align: center;
     font-size: 26px;
@@ -23,51 +24,74 @@ export default class CharDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: 'John Snow',
-            gender: 'male',
-            born: 1783,
-            died: 1820,
-            culture: 'first'
+            char: null
+        }
+
+        this.got = new GotService();
+    }
+
+    componentDidMount() {
+        this.updateChar();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.charId !== prevProps.charId) {
+            this.updateChar();
         }
     }
 
-    render() {
-        const {characters, books, houses} = this.props;
+    updateChar() {
+        const {charId} = this.props;
+        console.log(charId);
+        if (!charId) {
+            return;
+        } 
 
-        const got = new GotService();
-        let output = got.getOneRecord('/characters');
-        output.then(res => {
-            this.setState({
-                name: res.name,
-                gender: res.gender,
-                born: res.born,
-                died: res.died,
-                culture: res.culture
+        this.got.getOneCharacter(charId)
+            .then(char => {
+                this.setState({
+                    char: char
+                })
             })
-        })
+        
+    }
+
+    render() {
+
+        if (!this.state.char) {
+            return <SelectError>Select some character!</SelectError>
+        }
+
+        const {char} = this.state;
+
+        if (!char) {
+            return <Spinner />
+        }
+
+        const {name, gender, born, died, culture} = this.state.char;
 
         return (
-            <charDetails className="char-details rounded">
-                <h4>{}</h4>
+            <CharDetailsBlock className="char-details rounded">
+                <h4>{name || 'no data'}</h4>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between">
                         <span className="term">Gender</span>
-                        <span>male</span>
+                        <span>{gender || 'no data'}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
                         <span className="term">Born</span>
-                        <span>1783</span>
+                        <span>{born || 'no data'}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
                         <span className="term">Died</span>
-                        <span>1820</span>
+                        <span>{died || 'no data'}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
                         <span className="term">Culture</span>
-                        <span>First</span>
+                        <span>{culture || 'no data'}</span>
                     </li>
                 </ul>
-            </charDetails>
+            </CharDetailsBlock>
         );
     }
 }

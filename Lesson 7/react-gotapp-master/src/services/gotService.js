@@ -7,16 +7,13 @@ export default class GotService {
 
     async getResource(url) {
         const result = await fetch(`${this._apiBase}${url}`);
-        
-        if (!result.ok) {
-            throw new Error(`Could not fetch ${url}, received status ${result.status}`);
-        }
-
+    
         return await result.json();
     }
 
     async getAllRecords(url) {
         const result = await this.getResource(url);
+        // this.checkErrorStatus(result);
         if (url == '/characters') {
             return result.map(this._transformCharacter)
         }
@@ -25,6 +22,25 @@ export default class GotService {
         }
         else if (url == '/houses') {
             return result.map(this._transformHouse)
+        }
+    }
+
+    async getOneCharacter(number) {
+        const result = await this.getResource(`/characters/${number}`);
+        console.log(result);
+        return this._transformCharacter(result);
+    }
+
+    checkErrorStatus(input) {
+        if (input.status == 404) {
+            console.log('oops');
+            return 404;
+        }
+        else if (input.status == 408) {
+            return 408;
+        }
+        else if (input.status == 410) {
+            return 410;
         }
     }
 
@@ -40,6 +56,8 @@ export default class GotService {
             maxValue = 400;
         }
         const result = await this.getResource(`${url}/${Math.floor(Math.random() * (maxValue - 1) + 1)}`);
+
+        // this.checkErrorStatus(result);
         return this._transformCharacter(result);
     }
 

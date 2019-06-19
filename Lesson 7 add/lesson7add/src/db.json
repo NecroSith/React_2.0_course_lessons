@@ -1,4 +1,4 @@
-'[{
+{
     "bestsellers": [
         {
             "name": "Solimo Coffee Beans 2 kg",
@@ -82,4 +82,4 @@
             "price": "45.99$"
         }
     ]
-}]`
+}
