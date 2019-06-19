@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import GotService from '../../services/gotService';
 import Spinner from '../spinner';
+import ErrorMessage from '../errorMessage';
 
 const CharDetailsBlock = styled.div`
     background-color: #fff;
@@ -24,10 +25,17 @@ export default class CharDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            char: null
+            char: null,
+            error: false
         }
 
         this.got = new GotService();
+    }
+
+    componentDidCatch() {
+        this.setState({
+            error: true
+        })
     }
 
     componentDidMount() {
@@ -58,15 +66,21 @@ export default class CharDetails extends Component {
 
     render() {
 
-        if (!this.state.char) {
-            return <SelectError>Select some character!</SelectError>
-        }
-
         const {char} = this.state;
+
+        if (this.state.error) {
+            return <ErrorMessage />
+        }
 
         if (!char) {
             return <Spinner />
         }
+
+        if (!char) {
+            return <SelectError>Select some character!</SelectError>
+        }
+
+        
 
         const {name, gender, born, died, culture} = this.state.char;
 
