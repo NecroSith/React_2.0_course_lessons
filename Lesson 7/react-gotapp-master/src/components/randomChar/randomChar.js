@@ -47,11 +47,30 @@ export default class RandomChar extends Component {
             this.setState({ 
                 char,
                 loading: false,
-                error: false
+                error: false,
+                errorCode: null
              })
         }
-        else {
-            console.log('oops');
+        else if (char == 404) {
+            this.setState({ 
+                error: true,
+                loading: false,
+                errorCode: 404
+             })
+        }
+        else if (char == 408) {
+            this.setState({ 
+                error: true,
+                loading: false,
+                errorCode: 408
+             })
+        }
+        else if (char == 410) {
+            this.setState({ 
+                error: true,
+                loading: false,
+                errorCode: 410
+             })
         }
         
     }
@@ -64,16 +83,20 @@ export default class RandomChar extends Component {
     }
 
     updateChar = () => {
-        // console.log('update');
-        this.got.getOneRecord('/characters')
-            .then(this.onCharLoaded)
+        const result = this.got.getOneRecord('/characters');
+        if (result == 404) {
+            console.log('here we are!')
+        }
+        else {
+            result.then(this.onCharLoaded);
+        }      
     }  
 
     render() {
 
-        const {char, loading, error} = this.state;
+        const {char, loading, error, errorCode} = this.state;
 
-        const errorMsg = error ? <ErrorMessage /> : null;
+        const errorMsg = error ? <ErrorMessage code={errorCode}/> : null;
         const spinner = loading ? <Spinner /> : null;
         const data = !(loading || error) ? <View char={char}/> : null;
 

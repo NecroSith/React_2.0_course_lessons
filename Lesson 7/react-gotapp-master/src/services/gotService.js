@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorMessage from '../components/errorMessage';
 
 export default class GotService {
     constructor() {
@@ -7,21 +8,31 @@ export default class GotService {
 
     async getResource(url) {
         const result = await fetch(`${this._apiBase}${url}`);
-    
-        return await result.json();
+        try {
+            return await result.json();
+        }
+        catch(err) {
+            const {status} = result;
+            console.log(status);
+            return status;
+        } 
     }
 
     async getAllRecords(url) {
-        const result = await this.getResource(url);
-        // this.checkErrorStatus(result);
-        if (url == '/characters') {
-            return result.map(this._transformCharacter)
+        try {
+            const result = await this.getResource(url);
+            if (url == '/characters') {
+                return result.map(this._transformCharacter)
+            }
+            else if (url == '/books') {
+                return result.map(this._transformBook)
+            }
+            else if (url == '/houses') {
+                return result.map(this._transformHouse)
+            }
         }
-        else if (url == '/books') {
-            return result.map(this._transformBook)
-        }
-        else if (url == '/houses') {
-            return result.map(this._transformHouse)
+        catch(err) {
+            console.log(err);
         }
     }
 
@@ -31,23 +42,10 @@ export default class GotService {
         return this._transformCharacter(result);
     }
 
-    checkErrorStatus(input) {
-        if (input.status == 404) {
-            console.log('oops');
-            return 404;
-        }
-        else if (input.status == 408) {
-            return 408;
-        }
-        else if (input.status == 410) {
-            return 410;
-        }
-    }
-
     async getOneRecord(url) {
         let maxValue = 0;
         if (url == '/characters') {
-            maxValue = 120;
+            maxValue = 120000;
         }
         else if (url == '/books') {
             maxValue = 10;
@@ -57,8 +55,13 @@ export default class GotService {
         }
         const result = await this.getResource(`${url}/${Math.floor(Math.random() * (maxValue - 1) + 1)}`);
 
-        // this.checkErrorStatus(result);
-        return this._transformCharacter(result);
+        if (result == 404 || result == 408 || result == 410) {
+            return result;
+        }
+        else {
+            return this._transformCharacter(result);
+        }
+        
     }
 
 
