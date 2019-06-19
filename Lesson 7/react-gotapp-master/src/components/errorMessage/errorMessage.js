@@ -8,40 +8,28 @@ export default class ErrorMessage extends React.Component {
 
     render() {
         console.log('we have it', this.props.code);
+
+        let img = null,
+            msg = 'Something went wrong!';
+
         if (this.props.code == 404) {
-            return (
-                <>
-                <img src={img404} alt="record not found"></img>
-                <span>Oh no!</span>
-                </>
-                
-            )
+            img = img404;
+            msg = 'Record not found';
         }
         else if (this.props.code == 408) {
-            return (
-                <>
-                <img src={img408} alt="request timeout"></img>
-                <span>Oh no!</span>
-                </>
-                
-            )
+            img = img408;
+            msg = 'Request timeout';
         }
         else if (this.props.code == 410) {
-            return (
-                <>
-                <img src={img410} alt="record gone or deleted"></img>
-                <span>Oh no!</span>
-                </>
-                
-            )
+            img = img410;
+            msg = 'Record deleted';
         }
-        else {
-            return (
-                <>
-                <span>Something just went wrong</span>
-                </>
-                
-            )
-        }
+        return (
+            <>
+            <img src={img} alt={msg}></img>
+            <span>{msg}</span>
+            </>
+            
+        )
     } 
 }
