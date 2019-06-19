@@ -26,6 +26,7 @@ export default class CharDetails extends Component {
         super(props);
         this.state = {
             char: null,
+            loading: false,
             error: false
         }
 
@@ -54,11 +55,15 @@ export default class CharDetails extends Component {
         if (!charId) {
             return;
         } 
+        this.setState({
+            loading: true
+        })
 
         this.got.getOneCharacter(charId)
             .then(char => {
                 this.setState({
-                    char: char
+                    char: char,
+                    loading: false
                 })
             })
         
@@ -66,13 +71,13 @@ export default class CharDetails extends Component {
 
     render() {
 
-        const {char} = this.state;
+        const {char, loading} = this.state;
 
         if (this.state.error) {
             return <ErrorMessage />
         }
 
-        if (!char) {
+        if (loading) {
             return <Spinner />
         }
 

@@ -45,7 +45,7 @@ export default class GotService {
     async getOneRecord(url) {
         let maxValue = 0;
         if (url == '/characters') {
-            maxValue = 120000;
+            maxValue = 120;
         }
         else if (url == '/books') {
             maxValue = 10;
