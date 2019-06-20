@@ -1,7 +1,7 @@
 import React from 'react';
 import {Container, Button} from 'reactstrap';
 import Header from '../header';
-import RandomChar from '../randomChar';
+import RandomItem, {Field} from '../randomItem';
 import GotService from '../../services/gotService';
 import ErrorMessage from '../errorMessage';
 import CharacterPage from '../pages/characterPage';
@@ -42,7 +42,15 @@ export default class App extends React.Component {
             return <ErrorMessage />
         }
 
-        const char = this.state.randomChar ? <RandomChar /> : null;
+        const char = this.state.randomChar ? (
+        <RandomItem 
+            getItem={this.got.getOneRecord('/characters')}
+            tooltip='character'>
+            <Field field='gender' label='Gender'/>
+            <Field field='born' label='Born'/>
+            <Field field='died' label='Died'/>
+            <Field field='culture' label='Culture'/>
+        </RandomItem>) : null;
 
         return (
             <> 

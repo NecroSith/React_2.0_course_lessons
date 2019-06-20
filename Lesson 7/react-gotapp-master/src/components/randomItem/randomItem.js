@@ -20,26 +20,34 @@ const Term = styled.span`
     font-weight: bold;
 `;
 
+const Field = ({item, field, label}) => {
+    return (
+        <li className="list-group-item d-flex justify-content-between">
+            <Term className="term">{label}</Term>
+            <span>{item[field]}</span>
+        </li>
+    )
+}
 
-export default class RandomChar extends Component {
+export {Field};
+
+
+export default class RandomItem extends Component {
     constructor(props) {
         super(props);
         this.got = new GotService();
         this.state = {
-            randomChar: true,
-            char: {},
+            item: {},
             loading: true,
             error: false,
             status: null
         }
-
-        this.toggleRandom = this.toggleRandom.bind(this);
     }
 
     componentDidMount() {
         console.log('mounting');
-        this.updateChar();
-        this.timerId = setInterval(this.updateChar, 5000);
+        this.updateItem();
+        this.timerId = setInterval(this.updateItem, 5000);
     }
 
     componentWillUnmount() {
@@ -47,37 +55,30 @@ export default class RandomChar extends Component {
         clearInterval(this.timerId);
     }
 
-    toggleRandom() {
-        this.setState({
-            randomChar: !this.state.randomChar
-        })
-        console.log(this.state.randomChar)
-    }
-
-    onCharLoaded = char => {
-        if (typeof(char) == 'object') {
+    onItemLoaded = item => {
+        if (typeof(item) == 'object') {
             this.setState({ 
-                char,
+                item,
                 loading: false,
                 error: false,
                 errorCode: null
              })
         }
-        else if (char == 404) {
+        else if (item == 404) {
             this.setState({ 
                 error: true,
                 loading: false,
                 errorCode: 404
              })
         }
-        else if (char == 408) {
+        else if (item == 408) {
             this.setState({ 
                 error: true,
                 loading: false,
                 errorCode: 408
              })
         }
-        else if (char == 410) {
+        else if (item == 410) {
             this.setState({ 
                 error: true,
                 loading: false,
@@ -94,23 +95,23 @@ export default class RandomChar extends Component {
         })
     }
 
-    updateChar = () => {
-        const result = this.got.getOneRecord('/characters');
+    updateItem = () => {
+        const result = this.props.getItem;
         if (result == 404) {
             console.log('here we are!')
         }
         else {
-            result.then(this.onCharLoaded);
+            result.then(this.onItemLoaded);
         }      
     }  
 
     render() {
 
-        const {char, loading, error, errorCode} = this.state;
+        const {item, loading, error, errorCode} = this.state;
 
         const errorMsg = error ? <ErrorMessage code={errorCode}/> : null;
         const spinner = loading ? <Spinner /> : null;
-        const data = !(loading || error) ? <View char={char}/> : null;
+        const data = !(loading || error) ? <View item={item} tooltip={this.props.tooltip} fields={this.props.children}/> : null;
 
         return (
             <Row >
@@ -127,29 +128,16 @@ export default class RandomChar extends Component {
     }
 }
 
-const View = ({char}) => {
-    const {name, gender, born, died, culture} = char;
+const View = ({item, tooltip, fields}) => {
+    const {name} = item;
     return (
         <>
             <h4>
-                Random character: {name}</h4>
+                Random {tooltip}: {name}</h4>
             <ul className="list-group list-group-flush">
-                <li className="list-group-item d-flex justify-content-between">
-                    <Term>Gender </Term>
-                    <span>{gender}</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between">
-                    <Term>Born </Term>
-                    <span>{born}</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between">
-                    <Term>Died </Term>
-                    <span>{died}</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between">
-                    <Term>Culture </Term>
-                    <span>{culture}</span>
-                </li>
+                {React.Children.map(fields, child => {
+                    return React.cloneElement(child, {item});
+                })}
             </ul>
         </>
     )
