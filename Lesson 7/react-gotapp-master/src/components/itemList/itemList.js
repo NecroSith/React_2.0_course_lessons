@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import GotService from '../../services/gotService';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 
@@ -13,10 +12,9 @@ export default class ItemList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            charList: null,
+            itemList: null,
             error: false
         }
-        this.got = new GotService();
     }
 
     componentDidCatch() {
@@ -26,23 +24,26 @@ export default class ItemList extends Component {
     }
 
     componentDidMount() {
-        this.got.getResource('/characters?page=6&pageSize=5')
-            .then(charList => {
+        const {getData} = this.props;
+
+        getData
+            .then(itemList => {
                 this.setState({
-                    charList: charList
+                    itemList: itemList
                 })
             })
     }
 
     renderList(arr) {
-        return arr.map((item, i) => {
+        return arr.map((item) => {
             let id = item.url + '';
             id = id.slice(id.length-2);
+            const label = this.props.renderItem(item);
             return <ListGroupItem
-                key={i}
+                key={id}
                 onClick={() => this.props.onCharSelected(id)}
                 className="list-group-item">
-                {item.name || 'no data'}
+                {item.name}
             </ListGroupItem>
         })
     }
@@ -50,17 +51,17 @@ export default class ItemList extends Component {
 
     render() {
 
-        const {charList} = this.state;
+        const {itemList} = this.state;
 
         if (this.state.error) {
             return <ErrorMessage />
         }
 
-        if (!charList) {
+        if (!itemList) {
             return <Spinner />
         }
 
-        const items = this.renderList(charList);
+        const items = this.renderList(itemList);
 
         return (
             <ul className="item-list list-group">

@@ -6,6 +6,9 @@ import GotService from '../../services/gotService';
 import ErrorMessage from '../errorMessage';
 import CharacterPage from '../characterPage';
 
+import ItemList from '../itemList';
+import CharDetails from '../charDetails';
+
 
 
 export default class App extends React.Component {
@@ -18,6 +21,8 @@ export default class App extends React.Component {
             books: false,
             houses: false
         }
+
+        this.got = new GotService();
 
         this.updateState = this.updateState.bind(this);
         this.getData = this.getData.bind(this);
@@ -34,18 +39,17 @@ export default class App extends React.Component {
     }
 
     getData(value) {
-        const got = new GotService();
         let output = '';
         if (value == 'characters') {
-            output = got.getOneRecord('/characters');
+            output = this.got.getOneRecord('/characters');
             output.then(res => console.log(res))
         }
         else if (value == 'books') {
-            output = got.getOneRecord('/characters');
+            output = this.got.getOneRecord('/characters');
             output.then(res => console.log(res));
         }
         else if (value == 'houses') {
-            output = got.getOneRecord('/houses');
+            output = this.got.getOneRecord('/houses');
             output.then(res => console.log(res));
         }
         
@@ -109,8 +113,32 @@ export default class App extends React.Component {
                     </Col>
                 </Row>
                 <CharacterPage />
-                {/* <CharacterPage /> */}
-                {/* <CharacterPage /> */}
+                <Row>
+                    <Col md='6'>
+                        <ItemList 
+                            onCharSelected={this.onCharSelected}
+                            getData={this.got.getResource('/books?page=1&pageSize=5')}
+                            />
+                    </Col>
+                    <Col md='6'>
+                        <CharDetails 
+                            charId={this.state.selectedChar}
+                            />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md='6'>
+                        <ItemList 
+                            onCharSelected={this.onCharSelected}
+                            getData={this.got.getResource('/houses?page=1&pageSize=5')}
+                            />
+                    </Col>
+                    <Col md='6'>
+                        <CharDetails 
+                            charId={this.state.selectedChar}
+                            />
+                    </Col>
+                </Row>
                 </Container>
             </>
         );

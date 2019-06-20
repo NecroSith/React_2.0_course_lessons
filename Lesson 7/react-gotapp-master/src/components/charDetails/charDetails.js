@@ -95,19 +95,19 @@ export default class CharDetails extends Component {
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between">
                         <span className="term">Gender</span>
-                        <span>{gender || 'no data'}</span>
+                        <span>{gender}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
                         <span className="term">Born</span>
-                        <span>{born || 'no data'}</span>
+                        <span>{born}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
                         <span className="term">Died</span>
-                        <span>{died || 'no data'}</span>
+                        <span>{died}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
                         <span className="term">Culture</span>
-                        <span>{culture || 'no data'}</span>
+                        <span>{culture}</span>
                     </li>
                 </ul>
             </CharDetailsBlock>

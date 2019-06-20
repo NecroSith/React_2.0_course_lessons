@@ -6,7 +6,7 @@ export default class GotService {
         this._apiBase = 'https://www.anapioficeandfire.com/api';
     }
 
-    async getResource(url) {
+    getResource = async (url) => {
         const result = await fetch(`${this._apiBase}${url}`);
         try {
             return await result.json();
@@ -18,7 +18,7 @@ export default class GotService {
         } 
     }
 
-    async getAllRecords(url) {
+    getAllRecords = async(url) => {
         try {
             const result = await this.getResource(url);
             if (url == '/characters') {
@@ -36,13 +36,13 @@ export default class GotService {
         }
     }
 
-    async getOneCharacter(number) {
+    getOneCharacter = async (number) => {
         const result = await this.getResource(`/characters/${number}`);
         console.log(result);
         return this._transformCharacter(result);
     }
 
-    async getOneRecord(url) {
+    getOneRecord = async (url) => {
         let maxValue = 0;
         if (url == '/characters') {
             maxValue = 120;
@@ -61,18 +61,26 @@ export default class GotService {
         else {
             return this._transformCharacter(result);
         }
+    }
+
+    prepareData(data) {
         
     }
 
 
-    _transformCharacter(char) {
-        return {
+    _transformCharacter(char) { 
+        const result = {
             name: char.name,
             gender: char.gender,
             born: char.born,
             died: char.died,
             culture: char.culture
         }
+        for (let key in result) {
+            console.log(key)
+            result[key] = result[key] ? result[key] : 'no data';
+        }
+        return result;
     }
 
     _transformHouse(house) {

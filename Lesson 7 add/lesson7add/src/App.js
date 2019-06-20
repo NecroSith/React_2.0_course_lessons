@@ -5,7 +5,7 @@ export default class App extends React.Component {
   constructor() {
     super();
 
-    this.db = new dbService().getResource();
+    this.db = new dbService();
     
     this.state = {
       bestsellers: null,
@@ -15,48 +15,34 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    
-    const db = new dbService();
-      // .then(res => res.json())
-      // .then(res => console.log(res.coffee));
-
-    db.getResource();
+    this.getData();
   }
 
-  getData(value) {
-    let data = this.db.bestsellers[0].name;
-    // if (value === 'bestsellers') {
-    //   for (let key in this.db.bestsellers)
-    //   this.db.bestsellers.forEach(element => {
-    //     data = [...this.db.bestsellers]
-    //   });
-    // }
-    // else if (value === 'coffee') {
-    //   this.db.coffee.forEach(element => {
-    //     data += element.name
-    //   });
-    // }
-    // console.log(data);
-    return data;
+  getData() {
+    return this.db.getBestsellers();
   }
   
   render() {
+
+    let result = this.getData();
+    for (let item in result) {
+      return (
+        <ul>
+          <li>Name: {result[item].name}</li>
+          <li>
+            <img src={result[item].url} alt="coffee"></img>
+          </li>
+          <li>Price: {result[item].price}</li>
+        </ul>
+      )
+    }
+
     return (
       <>
-        <div>
-        <span>Random coffee!</span>
-          <ul>
-            <li>Name: {this.db.bestsellers[0].name}</li>
-            <li>
-              <img src={this.db.bestsellers[0].url} alt="coffee"></img>
-            </li>
-            <li>Price: {this.db.bestsellers[0].price}</li>
-          </ul>
-        {this.getData('bestsellers') || 'no data'}</div>
-        <div>{this.state.coffee || 'no data'}</div>
-        <div>{this.state.goods || 'no data'}</div>
+        {result}
       </>
     )
+
   }
 
 }

@@ -115,23 +115,23 @@ const View = ({char}) => {
     return (
         <>
             <h4>
-                Random character: {name || 'no data'}</h4>
+                Random character: {name}</h4>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item d-flex justify-content-between">
                     <Term>Gender </Term>
-                    <span>{gender || 'no data'}</span>
+                    <span>{gender}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <Term>Born </Term>
-                    <span>{born || 'no data'}</span>
+                    <span>{born}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <Term>Died </Term>
-                    <span>{died || 'no data'}</span>
+                    <span>{died}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <Term>Culture </Term>
-                    <span>{culture || 'no data'}</span>
+                    <span>{culture}</span>
                 </li>
             </ul>
         </>
