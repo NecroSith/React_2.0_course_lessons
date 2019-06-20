@@ -11,7 +11,7 @@ export default class CharacterPage extends React.Component {
         super(props);
 
         this.state = {
-            selectedChar: 130,
+            selectedChar: null,
             error: false
         }
 

@@ -11,7 +11,7 @@ export default class HousePage extends React.Component {
         super(props);
 
         this.state = {
-            selectedHouse: 4,
+            selectedHouse: null,
             error: false
         }
 

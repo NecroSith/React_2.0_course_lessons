@@ -11,7 +11,7 @@ export default class BookPage extends React.Component {
         super(props);
 
         this.state = {
-            selectedBook: 4,
+            selectedBook: null,
             error: false
         }
 
