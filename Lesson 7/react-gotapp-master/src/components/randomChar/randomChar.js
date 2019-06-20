@@ -3,6 +3,8 @@ import GotService from '../../services/gotService';
 import styled from 'styled-components';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
+import {Col, Row} from 'reactstrap';
+
 
 const RandomBlock = styled.div`
     background-color: #fff;
@@ -24,11 +26,14 @@ export default class RandomChar extends Component {
         super(props);
         this.got = new GotService();
         this.state = {
+            randomChar: true,
             char: {},
             loading: true,
             error: false,
             status: null
         }
+
+        this.toggleRandom = this.toggleRandom.bind(this);
     }
 
     componentDidMount() {
@@ -40,6 +45,13 @@ export default class RandomChar extends Component {
     componentWillUnmount() {
         console.log('unmounting');
         clearInterval(this.timerId);
+    }
+
+    toggleRandom() {
+        this.setState({
+            randomChar: !this.state.randomChar
+        })
+        console.log(this.state.randomChar)
     }
 
     onCharLoaded = char => {
@@ -101,11 +113,16 @@ export default class RandomChar extends Component {
         const data = !(loading || error) ? <View char={char}/> : null;
 
         return (
-            <RandomBlock className="rounded">
-                {errorMsg}
-                {spinner}
-                {data}
-            </RandomBlock>
+            <Row >
+                <Col lg={{size: 6, offset: 0}}>
+                    <RandomBlock className="rounded">
+                        {errorMsg}
+                        {spinner}
+                        {data}
+                    </RandomBlock>
+                </Col>
+            </Row>
+            
         );
     }
 }
