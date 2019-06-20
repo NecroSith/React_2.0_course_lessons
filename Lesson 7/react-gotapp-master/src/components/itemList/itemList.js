@@ -41,9 +41,9 @@ export default class ItemList extends Component {
             const label = this.props.renderItem(item);
             return <ListGroupItem
                 key={id}
-                onClick={() => this.props.onCharSelected(id)}
+                onClick={() => this.props.onItemSelected(id)}
                 className="list-group-item">
-                {item.name}
+                {label}
             </ListGroupItem>
         })
     }

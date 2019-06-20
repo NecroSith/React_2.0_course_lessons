@@ -4,10 +4,12 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import GotService from '../../services/gotService';
 import ErrorMessage from '../errorMessage';
-import CharacterPage from '../characterPage';
+import CharacterPage from '../pages/characterPage';
+import BookPage from '../pages/bookPage';
 
 import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import ItemDetails from '../itemDetails';
+import HousePage from '../pages/housesPage';
 
 
 
@@ -113,32 +115,8 @@ export default class App extends React.Component {
                     </Col>
                 </Row>
                 <CharacterPage />
-                <Row>
-                    <Col md='6'>
-                        <ItemList 
-                            onCharSelected={this.onCharSelected}
-                            getData={this.got.getResource('/books?page=1&pageSize=5')}
-                            />
-                    </Col>
-                    <Col md='6'>
-                        <CharDetails 
-                            charId={this.state.selectedChar}
-                            />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md='6'>
-                        <ItemList 
-                            onCharSelected={this.onCharSelected}
-                            getData={this.got.getResource('/houses?page=1&pageSize=5')}
-                            />
-                    </Col>
-                    <Col md='6'>
-                        <CharDetails 
-                            charId={this.state.selectedChar}
-                            />
-                    </Col>
-                </Row>
+                <BookPage />
+                <HousePage />
                 </Container>
             </>
         );

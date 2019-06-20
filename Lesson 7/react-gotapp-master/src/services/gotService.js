@@ -42,13 +42,23 @@ export default class GotService {
         return this._transformCharacter(result);
     }
 
+    getOneBook = async (number) => {
+        const result = await this.getResource(`/books/${number}`);
+        return this._transformBook(result);
+    }
+
+    getOneHouse = async (number) => {
+        const result = await this.getResource(`/houses/${number}`);
+        return this._transformHouse(result);
+    }
+
     getOneRecord = async (url) => {
         let maxValue = 0;
         if (url == '/characters') {
             maxValue = 120;
         }
         else if (url == '/books') {
-            maxValue = 10;
+            maxValue = 12;
         }
         else if (url == '/houses') {
             maxValue = 400;
