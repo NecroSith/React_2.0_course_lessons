@@ -8,6 +8,7 @@ import MainPage from '../pages/mainpage';
 import CharacterPage from '../pages/characterPage';
 import BookPage from '../pages/bookPage';
 import HousePage from '../pages/housesPage';
+import Page404 from '../pages/page404';
 import BooksItem from '../pages/booksItem';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
