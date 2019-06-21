@@ -5,9 +5,10 @@ import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 
 const ItemDetailsBlock = styled.div`
+    width: 50%;
     background-color: #fff;
     padding: 25px 25px 15px 25px;
-    margin-bottom: 40px;
+    margin: 0 auto 40px auto;
     h4 {
         margin-bottom: 20px;
         text-align: center;

@@ -1,12 +1,11 @@
 import React from 'react';
 import ItemList from '../../itemList';
-import ItemDetails, {Field} from '../../itemDetails';
 import ErrorMessage from '../../errorMessage';
 import GotService from '../../../services/gotService';
-import RowBlock from '../../rowBlock';
+import {withRouter} from 'react-router-dom';
 
 
-export default class BookPage extends React.Component {
+class BookPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -37,29 +36,16 @@ export default class BookPage extends React.Component {
             return <ErrorMessage />
         }
 
-        const itemList = (
+        return (
             <ItemList 
-                onItemSelected={this.onItemSelected}
+                onItemSelected={(itemId) => {
+                    this.props.history.push(`/books/${itemId}`)
+                }}
                 renderItem={item => item.name}
                 getData={this.got.getResource('/books?page=3&pageSize=5')}
                 />
         )
-
-        const itemDetails = (
-            <ItemDetails 
-                itemId={this.state.selectedBook}
-                tooltip='book'
-                loadItem={this.got.getOneBook(this.state.selectedBook)}
-                >
-                <Field field='authors' label='Authors'/>
-                <Field field='numberOfPages' label='Pages'/>
-                <Field field='publisher' label='Publisher'/>
-                <Field field='released' label='Released'/>
-            </ItemDetails>
-        )
-
-        return (
-            <RowBlock left={itemList} right={itemDetails} />
-        )
     }
 }
+
+export default withRouter(BookPage);

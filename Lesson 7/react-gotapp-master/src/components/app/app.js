@@ -4,11 +4,12 @@ import Header from '../header';
 import RandomItem, {Field} from '../randomItem';
 import GotService from '../../services/gotService';
 import ErrorMessage from '../errorMessage';
+import MainPage from '../pages/mainpage';
 import CharacterPage from '../pages/characterPage';
 import BookPage from '../pages/bookPage';
 import HousePage from '../pages/housesPage';
-
-
+import BooksItem from '../pages/booksItem';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -53,18 +54,32 @@ export default class App extends React.Component {
         </RandomItem>) : null;
 
         return (
-            <> 
-                <Container>
-                    <Header updateState={this.updateState}/>
-                    <Button onClick={this.toggleRandom}>Show/hide random character</Button>
-                </Container>
-                <Container>
-                {char}
-                <CharacterPage />
-                <BookPage />
-                <HousePage />
-                </Container>
-            </>
+            <Router>
+                <div className="app"> 
+                    <Container>
+                        <Header updateState={this.updateState}/>
+                        <Button onClick={this.toggleRandom}>Show/hide random character</Button>
+                    </Container>
+                    <Container>
+                    {char}
+                    <Switch>
+                        <Route path="/" exact component={MainPage} />
+                        <Route path="/characters/" component={CharacterPage}/>
+                        <Route path="/books/" exact component={BookPage}/>
+                        <Route path="/houses/" component={HousePage}/>
+                        <Route path="/books/:id" exact render={
+                            ({match}) => {
+                                console.log(match.params.id);
+                                const id = match.params.id;
+                                return <BooksItem bookId={id}/>
+                            }
+                        } />
+                        <Route component={Page404} />
+                    </Switch>
+                    
+                    </Container>
+                </div>
+            </Router>
         );
     }
 };
