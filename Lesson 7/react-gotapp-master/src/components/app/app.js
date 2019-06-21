@@ -12,13 +12,15 @@ import Page404 from '../pages/page404';
 import BooksItem from '../pages/booksItem';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import styled from 'styled-components';
+import imgBg from './got.jpeg';
 
 const AppWrapper = styled.div`
     overflow-x: hidden;
-    background: url('img/got.jpeg') center center no-repeat;
+    background: url(${imgBg}) center center no-repeat;
     background-size: cover;
     font-size: 16px;
     height: 100%;	
+    padding-bottom: 3%;
 `;
 
 export default class App extends React.Component {
