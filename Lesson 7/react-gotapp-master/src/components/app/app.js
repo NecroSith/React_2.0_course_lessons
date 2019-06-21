@@ -11,6 +11,15 @@ import HousePage from '../pages/housesPage';
 import Page404 from '../pages/page404';
 import BooksItem from '../pages/booksItem';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import styled from 'styled-components';
+
+const AppWrapper = styled.div`
+    overflow-x: hidden;
+    background: url('img/got.jpeg') center center no-repeat;
+    background-size: cover;
+    font-size: 16px;
+    height: 100%;	
+`;
 
 export default class App extends React.Component {
     constructor(props) {
@@ -56,7 +65,7 @@ export default class App extends React.Component {
 
         return (
             <Router>
-                <div className="app"> 
+                <AppWrapper> 
                     <Container>
                         <Header updateState={this.updateState}/>
                         <Button onClick={this.toggleRandom}>Show/hide random character</Button>
@@ -79,7 +88,7 @@ export default class App extends React.Component {
                     </Switch>
                     
                     </Container>
-                </div>
+                </AppWrapper>
             </Router>
         );
     }
