@@ -1,34 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import './index.css';
 import {createStore} from 'redux'
-
-console.log('hi redux');
 
 const reducer = (state = 0, action) => {
     switch (action.type) {
         case 'INC': return state + 1;
+        case 'DEC': return state - 1;
+        case 'ZERO': return 0;
         default: return state;
     }
 }
 
+const inc = () => {return{type: 'INC'}}
+const dec = () => {return{type: 'DEC'}}
+const zero = () => {return{type: 'ZERO'}}
+
 const store = createStore(reducer);
 
-store.subscribe(() => {
-    console.log(store.getState());
-})
+const update = () => {
+    return document.getElementById('counter').textContent = store.getState();
+}
 
-store.dispatch({type: 'INC'});
-store.dispatch({type: 'INC'});
-store.dispatch({type: 'INC'});
+store.subscribe(update);
 
-// console.log(store.getState());
-
-
-
-// let state = reducer(undefined, {});
-// console.log(state);
-// state = reducer(state, {type: 'INC'});
-// state = reducer(state, {type: 'INC'});
-// console.log(state);
-
-
+document.getElementById('inc').addEventListener('click', () => {store.dispatch(inc())});
+document.getElementById('dec').addEventListener('click', () => {store.dispatch(dec())});
+document.getElementById('zero').addEventListener('click', () => {store.dispatch(zero());
+});
