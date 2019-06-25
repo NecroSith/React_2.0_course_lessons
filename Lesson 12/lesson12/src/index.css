@@ -49,10 +49,10 @@ button {
     margin-right: 38px;
 }
 
-button#dec {
+button.dec {
     background: #E7AA10;
 }
 
-button#zero {
+button.zero {
     background: #CF1C1C;
 }
