@@ -1,19 +1,16 @@
 {
-  "posts": [
+  "numbers": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "const": "25",
+      "id": 1
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "const": "34",
+      "id": 2
+    },
+    {
+      "const": "50",
+      "id": 3
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
