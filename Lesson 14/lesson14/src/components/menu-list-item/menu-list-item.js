@@ -1,24 +1,35 @@
 import React from 'react';
 import './menu-list-item.scss';
 
-const MenuListItem = () => {
+const MenuListItem = ({menuItem}) => {
+    const {title, price, url, category} = menuItem;
+
+    let iconType = '';
+    switch (category) {
+        case 'salads':
+            iconType = './img/vegetables.svg';
+            break;
+        case 'pizza':
+            iconType = './img/pizza-slice.svg';
+            break;
+        case 'meat':
+            iconType = './img/steak.svg';
+            break;
+        default: 
+            iconType = './img/fork.svg';
+            break;
+    }
     return (
-        <>
-            <li className="menu__item">
-                <div className="menu__title">Cesar salad</div>
-                <img className="menu__img" src="https://static.1000.menu/img/content/21458/-salat-cezar-s-kr-salat-cezar-s-krevetkami-s-maionezom_1501173720_1_max.jpg" alt="Cesar salad"></img>
-                <div className="menu__category">Category: <span>salads</span></div>
-                <div className="menu__price">Price: <span>12$</span></div>
-                <button className="menu__btn">Add to cart</button>
-            </li>
-            <li className="menu__item">
-                <div className="menu__title">Cesar salad</div>
-                <img className="menu__img" src="https://static.1000.menu/img/content/21458/-salat-cezar-s-kr-salat-cezar-s-krevetkami-s-maionezom_1501173720_1_max.jpg" alt="Cesar salad"></img>
-                <div className="menu__category">Category: <span>salads</span></div>
-                <div className="menu__price">Price: <span>12$</span></div>
-                <button className="menu__btn">Add to cart</button>
-            </li>
-        </>
+        <li className="menu__item">
+            <div className="menu__title">
+                <img src={iconType} alt={title}></img>
+                {title}
+            </div>
+            <img className="menu__img" src={url} alt="Cesar salad"></img>
+            <div className="menu__category">Category: <span>{category}</span></div>
+            <div className="menu__price">Price: <span>{price}$</span></div>
+            <button className="menu__btn">Add to cart</button>
+        </li>
     )
 }
 
