@@ -2,6 +2,17 @@
     padding-top: 120px;
     padding-bottom: 50px;
     min-height: 100vh;
+    text-align: center;
+    .cart-btn {
+        margin-top: 30px;
+        width: 200px;
+        padding: 20px 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        background-color: lightblue;
+        border-radius: 4%;
+    }
     &__title {
         font-size: 36px;
         color: #fff;

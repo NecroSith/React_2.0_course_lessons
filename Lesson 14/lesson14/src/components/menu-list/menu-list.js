@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import MenuListItem from '../menu-list-item';
 import {connect} from 'react-redux';
 import WithRestoService from '../hoc';
-import {menuLoaded, menuRequested, menuError} from '../../actions';
+import {menuLoaded, menuRequested, menuError, addedToCart} from '../../actions';
 import Spinner from '../spinner';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import itemPage from '../pages/item-page';
 
 
 import './menu-list.scss';
@@ -20,21 +22,28 @@ class MenuList extends Component {
     }
     
     render() {
-        const {menuItems, loading} = this.props;
+        const {menuItems, loading, addedToCart} = this.props;
         console.log(menuItems);
 
         const menuListItem = menuItems.map(menuItem => {
-            return <MenuListItem key={menuItem.id} menuItem={menuItem} />
+            return <MenuListItem 
+                        key={menuItem.id} 
+                        menuItem={menuItem}
+                        onAddToCart={() => addedToCart(menuItem.id)}
+                        />
         })
 
         const content = loading ? <Spinner /> : menuListItem;
 
         return (
-            <ul className="menu__list">
-                {
-                   content 
-                }
-            </ul>
+            <Router>
+                <ul className="menu__list">
+                    {
+                        content 
+                    }
+                     <Route path="/menu/" component={itemPage} />
+                </ul>
+            </Router>
         )
     }
 };
@@ -50,7 +59,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
         menuLoaded,
         menuRequested,
-        menuError
+        menuError,
+        addedToCart
 }
 
 

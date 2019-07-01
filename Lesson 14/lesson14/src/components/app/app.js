@@ -9,7 +9,7 @@ const App = () => {
     return (
         <div style={{background: `url(${Background}) center center/cover no-repeat`}} className="app">
             <Router>
-                <AppHeader total={50}/>
+                <AppHeader/>
                 <Switch>
                     <Route exact path="/" component={MainPage} />
                     <Route path="/cart" component={CartPage} />
