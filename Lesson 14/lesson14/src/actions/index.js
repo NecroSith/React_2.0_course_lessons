@@ -11,10 +11,10 @@ const menuRequested = () => {
     }
 }
 
-const menuError = (newMenu) => {
+const menuError = (msg) => {
     return {
         type: 'MENU_ERROR',
-        errorType: newMenu
+        errorType: msg
     }
 }
 

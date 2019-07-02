@@ -6,6 +6,7 @@ import {menuLoaded, menuRequested, menuError, addedToCart} from '../../actions';
 import Spinner from '../spinner';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import itemPage from '../pages/item-page';
+import error502 from '../../img/502.jpg';
 
 
 import './menu-list.scss';
@@ -22,8 +23,14 @@ class MenuList extends Component {
     }
     
     render() {
-        const {menuItems, loading, addedToCart} = this.props;
-        console.log(menuItems);
+        const {menuItems, loading, addedToCart, error} = this.props;
+        if (error) {
+            return (
+                <div>
+                    <img src={error502} alt="oh no, server is out there somewhere!" />
+                </div>
+            )
+        }
 
         const menuListItem = menuItems.map(menuItem => {
             return <MenuListItem 

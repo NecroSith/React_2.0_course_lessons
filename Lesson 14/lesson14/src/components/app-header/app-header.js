@@ -8,10 +8,8 @@ const AppHeader = ({items}) => {
 
     let total = 0;
     for (let item in items) {
-        console.log(items[item].price);
         total += items[item].price;
     }
-    console.log(total);
     return (
         <header className="header">
             <Link to='/' className='header__link'>Menu</Link>

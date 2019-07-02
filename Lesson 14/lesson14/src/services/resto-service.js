@@ -1,3 +1,6 @@
+import React from 'react';
+import Error from '../components/error';
+
 export default class RestoService {
     constructor() {
         this._apiBase = 'http://localhost:3001';
@@ -5,9 +8,7 @@ export default class RestoService {
     getMenuItems() {
         const result = fetch(this._apiBase + `/menu`)
             .then(res => res.json())
-            // .then(res => JSON.stringify(res))
-            .catch(res => `Something went wrong!`);
-        console.log(result);
+            .catch(res => <Error />);
         return result;
     }
     postItems = async(data) => {
