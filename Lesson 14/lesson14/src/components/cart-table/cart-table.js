@@ -16,7 +16,7 @@ class CartTable extends React.Component {
     }
 
     render() {
-        const {items, deleteFromCart, itemMultiplier, itemsBought} = this.props;
+        const {items, deleteFromCart, itemsBought} = this.props;
         const data = items ? <button onClick={this.postItemsToCart} className="cart-btn">Купить все!</button> : null;
 
         const success = <div style={{marginTop: 30}}className="cart__title">Спасибо за покупку в нашем магазине!</div>;
@@ -48,10 +48,9 @@ class CartTable extends React.Component {
     
 };
 
-const mapStateToProps = ({items, itemMultiplier, itemsBought}) => {
+const mapStateToProps = ({items, itemsBought}) => {
     return {
         items,
-        itemMultiplier,
         itemsBought
     }
 }

@@ -3,8 +3,7 @@ const initialState = {
     loading: true,
     error: false,
     items: [],
-    itemsBought: false,
-    itemMultiplier: 1
+    itemsBought: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -28,50 +27,41 @@ const reducer = (state = initialState, action) => {
                 error: true
             };
         case 'ITEM_ADD_TO_CART':
-            console.log('Multiplier ' + state.itemMultiplier);
-           
-
             const id = action.payload;
             const item = state.menu.find(item => item.id === id);
-            console.log('Count ' + item.count);
             const itemExists = state.items.find(item => item.id === id);
+            console.log(itemExists);
+
             if (itemExists) {
-                console.log(state.itemMultiplier);
+                console.log('it exists' + itemExists.count);
                 const itemIndex = state.items.findIndex(item => item.id === id);
-                const newMultiplier = state.itemMultiplier + 1;
-                console.log('Multiplier new' + newMultiplier);
-                state.itemMultiplier = item.price;
                 const newItem = {
                     title: item.title,
-                    count: 1,
-                    price: item.price + state.itemMultiplier ,
+                    count: itemExists.count + 1,
+                    price: item.price * (itemExists.count + 1),
                     url: item.url,
                     id: item.id
                 };
                 return {
                     ...state,
-                    itemsBought: false,
-                    // itemMultiplier: newMultiplier,
                     items: [
                         ...state.items.slice(0,itemIndex),
                         newItem,
                         ...state.items.slice(itemIndex+1)
-                       
                     ]
                 };
             }
             else {
                 const newItem = {
                     title: item.title,
-                    count: 1,
                     price: item.price,
                     url: item.url,
+                    count: 1,
                     id: item.id,
                     
                 };
                 return {
                     ...state,
-                    itemsBought: false,
                     items: [
                         ...state.items,
                         newItem
