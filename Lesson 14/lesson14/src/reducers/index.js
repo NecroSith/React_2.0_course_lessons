@@ -23,7 +23,6 @@ const reducer = (state = initialState, action) => {
         case 'MENU_ERROR':
             return {
                 ...state,
-                loading: true,
                 error: true
             };
         case 'ITEM_ADD_TO_CART':

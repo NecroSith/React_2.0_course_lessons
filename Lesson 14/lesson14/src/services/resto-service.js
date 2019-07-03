@@ -1,5 +1,9 @@
 import React from 'react';
 import Error from '../components/error';
+import WithRestoService from '../components/hoc';
+import {connect} from 'react-redux';
+import {menuError} from '../actions';
+
 
 export default class RestoService {
     constructor() {
@@ -8,11 +12,11 @@ export default class RestoService {
     getMenuItems() {
         const result = fetch(this._apiBase + `/menu`)
             .then(res => res.json())
-            .catch(res => <Error />);
+            // .catch(res => <Error />);
         return result;
     }
     postItems = async(data) => {
-        const result = await fetch('http://localhost:3001/cart', {
+        const result = await fetch(this._apiBase + '/cart', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -23,3 +27,15 @@ export default class RestoService {
         return result;
     }
 }
+
+// const mapStateToProps = (state) => {
+//     return {
+//         error: state.error
+//     }
+// }
+
+// const mapDispatchToProps = {
+//     menuError,
+// }
+
+// export default WithRestoService()(connect(mapStateToProps, mapDispatchToProps)(RestoService));

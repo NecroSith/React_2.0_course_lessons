@@ -24,7 +24,9 @@ class MenuList extends Component {
     
     render() {
         const {menuItems, loading, addedToCart, error} = this.props;
+
         if (error) {
+
             return (
                 <div>
                     <img src={error502} alt="oh no, server is out there somewhere!" />
