@@ -1,10 +1,3 @@
-import React from 'react';
-import Error from '../components/error';
-import WithRestoService from '../components/hoc';
-import {connect} from 'react-redux';
-import {menuError} from '../actions';
-
-
 export default class RestoService {
     constructor() {
         this._apiBase = 'http://localhost:3001';
@@ -27,15 +20,3 @@ export default class RestoService {
         return result;
     }
 }
-
-// const mapStateToProps = (state) => {
-//     return {
-//         error: state.error
-//     }
-// }
-
-// const mapDispatchToProps = {
-//     menuError,
-// }
-
-// export default WithRestoService()(connect(mapStateToProps, mapDispatchToProps)(RestoService));
